@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scripts/tile_button.gd" type="Script" id=1]
+[ext_resource path="res://sprites/path1.png" type="Texture" id=2]
+
+[node name="tile_button" type="Button"]
+margin_right = 28.0
+margin_bottom = 22.0
+shortcut_in_tooltip = false
+icon = ExtResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
