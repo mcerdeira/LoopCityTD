@@ -2,7 +2,6 @@ extends Node2D
 onready var button = preload("res://scenes/tile_button.tscn")
 onready var icon1 = preload("res://sprites/path1.png")
 onready var icon2 = preload("res://sprites/warrior1.png")
-#
 
 func _ready():
 	$tile_positioner.texture = null
