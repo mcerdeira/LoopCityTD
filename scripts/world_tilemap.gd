@@ -38,6 +38,7 @@ func spawn_city():
 			break
 
 	Global.pop_sound()
+	Global.CITY_COUNT += 1
 	var h = city.instance()
 	h.set_position(pos)
 	get_parent().get_parent().add_child(h)
