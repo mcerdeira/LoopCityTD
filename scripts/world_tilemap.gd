@@ -38,9 +38,9 @@ func spawn_city():
 			break
 
 	Global.pop_sound()
-	Global.CITY_COUNT += 1
 	var h = city.instance()
 	h.set_position(pos)
+	h.coin_reward = 1 + (randi() % 3)
 	get_parent().get_parent().add_child(h)
 
 func is_empty(pos):

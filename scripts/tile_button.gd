@@ -1,7 +1,6 @@
 extends Button
 export var tile_positioner = 0
 export var mode = ""
-export var cost = 0
 
 func _ready():
 	pass
@@ -11,7 +10,7 @@ func _pressed():
 	Global.WRITE_MODE = mode
 
 func _on_tile_button_mouse_entered():
-	$button_label.text = "$" + str(cost)
+	$button_label.text = "$" + str(Global.get_cost(mode))
 	$button_label.visible = true
 
 func _on_tile_button_mouse_exited():

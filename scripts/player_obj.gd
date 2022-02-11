@@ -9,6 +9,7 @@ var line_tscn = preload("res://scenes/line.tscn")
 var line = null
 var reverse = false
 var base_pos = null
+var reward = 0
 
 func set_end_node(position, pos):
 	end_node = position
@@ -25,6 +26,7 @@ func get_path():
 		current_path = path_find.get_simple_path(init_pos, end_node, false)
 
 func _ready():
+	Global.WARRIOR_COUNT += 1
 	$coin.visible = false
 	var parent = get_parent()
 	line = line_tscn.instance()
@@ -53,7 +55,7 @@ func _physics_process(delta):
 			$coin.visible = reverse
 			get_path()
 			if !reverse:
-				Global.warrior_leave_coin()
+				Global.warrior_leave_coin(reward)
 			else:
 				Global.warrior_get_coin()
 			

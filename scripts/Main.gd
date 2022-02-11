@@ -15,9 +15,15 @@ func _ready():
 		b.icon = buttons[i].icon
 		b.tile_positioner = $tile_positioner
 		b.mode = buttons[i].mode
-		b.cost = Global.get_cost(b.mode)
 		add_child(b)
-		
+
+func _process(delta):
+	ttl_city_spawn += Global.SPEED * delta
+	$building_bar.calc_progress(ttl_city_spawn)
+	if ttl_city_spawn >= Global.TTL_CITY_SPAWN:
+		ttl_city_spawn = 0
+		spawn_city()
+
 func _input(event):
 	if event.is_action_pressed("toggle_fullscreen"):
 		OS.window_fullscreen = !OS.window_fullscreen
@@ -27,13 +33,7 @@ func _input(event):
 		Global.initialize()
 		get_tree().reload_current_scene()
 
-func _process(delta):
-	ttl_city_spawn += 1 * delta
-	$building_bar.calc_progress(ttl_city_spawn)
-	
-	if ttl_city_spawn >= Global.TTL_CITY_SPAWN:
-		ttl_city_spawn = 0
-		spawn_city()
+
 
 func spawn_city():
 	var node = get_node("nav/world_tilemap")
