@@ -2,6 +2,8 @@ extends Node2D
 onready var button = preload("res://scenes/tile_button.tscn")
 onready var icon1 = preload("res://sprites/path1.png")
 onready var icon2 = preload("res://sprites/warrior1.png")
+onready var city = preload("res://scenes/city_obj.tscn")
+var ttl_city_spawn = 0
 
 func _ready():
 	$tile_positioner.texture = null
@@ -13,6 +15,7 @@ func _ready():
 		b.icon = buttons[i].icon
 		b.tile_positioner = $tile_positioner
 		b.mode = buttons[i].mode
+		b.cost = Global.get_cost(b.mode)
 		add_child(b)
 		
 func _input(event):
@@ -21,4 +24,18 @@ func _input(event):
 	if event.is_action_pressed("quit_game"):
 		get_tree().quit()
 	if event.is_action_pressed("restart_game"):
-		get_tree(). reload_current_scene()
+		Global.initialize()
+		get_tree().reload_current_scene()
+
+func _process(delta):
+	ttl_city_spawn += 1 * delta
+	$building_bar.calc_progress(ttl_city_spawn)
+	
+	if ttl_city_spawn >= Global.TTL_CITY_SPAWN:
+		ttl_city_spawn = 0
+		spawn_city()
+
+func spawn_city():
+	var node = get_node("nav/world_tilemap")
+	var c = node.spawn_city()
+	

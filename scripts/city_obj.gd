@@ -7,9 +7,12 @@ func _ready():
 
 func create_warrior():
 	if Global.WRITE_MODE == "warrior":
-		var parent = get_parent()
-		var p = player.instance()
-		var pos = parent.get_node("base_obj")
-		p.set_end_node(position)
-		p.set_position(pos.position)
-		parent.add_child(p)
+		var cost = Global.get_cost("warrior")
+		if  Global.COINS >= cost:
+			var parent = get_parent()
+			Global.purchase(cost)
+			var p = player.instance()
+			var pos = parent.get_node("base_obj")
+			p.set_end_node(position, pos.position)
+			p.set_position(pos.position)
+			parent.add_child(p)

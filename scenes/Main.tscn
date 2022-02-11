@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://sprites/path_tilemap.png" type="Texture" id=1]
 [ext_resource path="res://scripts/Main.gd" type="Script" id=2]
@@ -6,9 +6,11 @@
 [ext_resource path="res://scenes/base_obj.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/city_obj.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/line.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/coin_diplay.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scripts/tile_positioner.gd" type="Script" id=8]
 [ext_resource path="res://sprites/path1.png" type="Texture" id=9]
 [ext_resource path="res://sprites/tile_positioner_empty.png" type="Texture" id=10]
+[ext_resource path="res://scenes/building_bar.tscn" type="PackedScene" id=11]
 
 [sub_resource type="NavigationPolygon" id=22]
 vertices = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
@@ -181,10 +183,7 @@ script = ExtResource( 3 )
 position = Vector2( 40, 40 )
 
 [node name="city_obj" parent="." instance=ExtResource( 5 )]
-position = Vector2( 392, 168 )
-
-[node name="city_obj2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 248, 168 )
+position = Vector2( 440, 40 )
 
 [node name="line" parent="." instance=ExtResource( 6 )]
 
@@ -196,3 +195,9 @@ script = ExtResource( 8 )
 [node name="tile_positioner_empty" type="Sprite" parent="."]
 position = Vector2( 11, 14 )
 texture = ExtResource( 10 )
+
+[node name="coin_diplay" parent="." instance=ExtResource( 7 )]
+position = Vector2( 31, 14 )
+
+[node name="building_bar" parent="." instance=ExtResource( 11 )]
+position = Vector2( 59, 6 )

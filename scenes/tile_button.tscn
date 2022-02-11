@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scripts/tile_button.gd" type="Script" id=1]
 [ext_resource path="res://sprites/path1.png" type="Texture" id=2]
+[ext_resource path="res://fonts/prstartk.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 3 )
 
 [node name="tile_button" type="Button"]
 margin_right = 28.0
@@ -12,3 +16,15 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="button_label" type="Label" parent="."]
+margin_top = -17.0
+margin_right = 80.0
+margin_bottom = -1.0
+custom_fonts/font = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="mouse_entered" from="." to="." method="_on_tile_button_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_tile_button_mouse_exited"]
