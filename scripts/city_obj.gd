@@ -24,7 +24,7 @@ func initialize():
 		$sprites.frame = 1
 
 func create_character():
-	if Global.is_character(Global.WRITE_MODE):
+	if Global.is_character(Global.WRITE_MODE) and Global.matching_types(Global.WRITE_MODE, type):
 		var cost = Global.get_cost(Global.WRITE_MODE)
 		if  Global.COINS >= cost:
 			var parent = get_parent()
@@ -35,6 +35,8 @@ func create_character():
 			p.set_position(pos.position)
 			p.destination_type = type
 			p.reward = coin_reward
+			p.type = Global.WRITE_MODE
+			p.initialize()
 			parent.add_child(p)
 
 func _on_city_area2d_mouse_entered():

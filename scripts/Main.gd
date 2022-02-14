@@ -2,8 +2,8 @@ extends Node2D
 onready var button = preload("res://scenes/tile_button.tscn")
 onready var icon1 = preload("res://sprites/path1.png")
 onready var icon2 = preload("res://sprites/warrior1.png")
-onready var icon3 = preload("res://sprites/warrior1.png")
-onready var icon4 = preload("res://sprites/warrior1.png")
+onready var icon3 = preload("res://sprites/gatherer1.png")
+onready var icon4 = preload("res://sprites/miner1.png")
 
 onready var city = preload("res://scenes/city_obj.tscn")
 var ttl_city_spawn = 0

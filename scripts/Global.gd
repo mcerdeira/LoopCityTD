@@ -57,6 +57,11 @@ func purchase(cost):
 	AudioInstance.stream = Purchase_Coin
 	AudioInstance.play()
 	
+func matching_types(mode, type):
+	return ((mode == "warrior" and type == "city") 
+	or (mode == "gatherer" and type == "chest")
+	or (mode == "miner" and type == "rock"))
+
 func is_character(mode):
 	return (mode == "warrior" or mode == "gatherer" or mode == "miner")
 

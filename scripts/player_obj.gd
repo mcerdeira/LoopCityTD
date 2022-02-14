@@ -28,19 +28,21 @@ func get_path():
 		current_path = path_find.get_simple_path(init_pos, end_node, false)
 
 func _ready():
-	if type == "warrior":
-		Global.WARRIOR_COUNT += 1
-	elif type == "gatherer":
-		Global.GATHERER_COUNT += 1
-	elif type == "miner":
-		Global.MINER_COUNT += 1
-		
 	$coin.visible = false
 	var parent = get_parent()
 	line = line_tscn.instance()
 	parent.add_child(line)
 	
 	get_path()
+	
+func initialize():
+	$sprites.animation = type
+	if type == "warrior":
+		Global.WARRIOR_COUNT += 1
+	elif type == "gatherer":
+		Global.GATHERER_COUNT += 1
+	elif type == "miner":
+		Global.MINER_COUNT += 1
 
 func _process(delta):
 	if !active:
