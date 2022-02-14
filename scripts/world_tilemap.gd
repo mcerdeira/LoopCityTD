@@ -24,7 +24,7 @@ func _process(delta):
 func mouse_ok(mouse_pos):
 	return (mouse_pos.y <= Global.BUTTON_ZONE_Y)
 
-func spawn_city():
+func spawn_destination():
 	var pos
 	while(true):
 		randomize()
@@ -41,6 +41,7 @@ func spawn_city():
 	var h = city.instance()
 	h.set_position(pos)
 	h.coin_reward = 1 + (randi() % 3)
+	h.randomize_me()
 	get_parent().get_parent().add_child(h)
 
 func is_empty(pos):

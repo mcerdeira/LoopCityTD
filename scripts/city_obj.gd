@@ -1,12 +1,30 @@
 extends StaticBody2D
 export var coin_reward = 1
+export var type = "chest"
+export var total_actions = 0
 onready var player = preload("res://scenes/player_obj.tscn")
 
 func _ready():
 	$city_label.visible = false
+	initialize()
+
+func randomize_me():
+	type = Global.destionation_types[randi() % Global.destionation_types.size()]
+	initialize()
+
+func initialize():
+	if type == "chest":
+		total_actions = 5 + (randi() % 10)
+		$sprites.frame = 0
+	elif type == "city":
+		total_actions = 15 + (randi() % 50)
+		$sprites.frame = 2
+	elif type == "rock":
+		total_actions = 5 + (randi() % 25)
+		$sprites.frame = 1
 
 func create_character():
-	if Global.WRITE_MODE == "warrior" or Global.WRITE_MODE == "gatherer":
+	if Global.is_character(Global.WRITE_MODE):
 		var cost = Global.get_cost(Global.WRITE_MODE)
 		if  Global.COINS >= cost:
 			var parent = get_parent()
@@ -15,6 +33,7 @@ func create_character():
 			var pos = parent.get_node("base_obj")
 			p.set_end_node(position, pos.position)
 			p.set_position(pos.position)
+			p.destination_type = type
 			p.reward = coin_reward
 			parent.add_child(p)
 

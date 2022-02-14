@@ -5,6 +5,7 @@
 [ext_resource path="res://fonts/prstartk.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="DynamicFont" id=1]
+size = 8
 font_data = ExtResource( 3 )
 
 [node name="tile_button" type="Button"]
@@ -18,9 +19,9 @@ __meta__ = {
 }
 
 [node name="button_label" type="Label" parent="."]
-margin_top = -17.0
+margin_top = -18.0
 margin_right = 80.0
-margin_bottom = -1.0
+margin_bottom = -9.0
 custom_fonts/font = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false

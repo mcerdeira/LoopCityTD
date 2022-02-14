@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 var current_path = []
 export var type = ""
+export var destination_type = ""
 var life = 5
 var active = false
 var player_destination = null
@@ -31,6 +32,8 @@ func _ready():
 		Global.WARRIOR_COUNT += 1
 	elif type == "gatherer":
 		Global.GATHERER_COUNT += 1
+	elif type == "miner":
+		Global.MINER_COUNT += 1
 		
 	$coin.visible = false
 	var parent = get_parent()
