@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 var current_path = []
+export var type = ""
 var life = 5
 var active = false
 var player_destination = null
@@ -26,7 +27,11 @@ func get_path():
 		current_path = path_find.get_simple_path(init_pos, end_node, false)
 
 func _ready():
-	Global.WARRIOR_COUNT += 1
+	if type == "warrior":
+		Global.WARRIOR_COUNT += 1
+	elif type == "gatherer":
+		Global.GATHERER_COUNT += 1
+		
 	$coin.visible = false
 	var parent = get_parent()
 	line = line_tscn.instance()

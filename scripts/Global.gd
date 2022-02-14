@@ -11,7 +11,9 @@ var Leave_Coin = preload("res://sfx/3_Coins.wav")
 var Pop = preload("res://sfx/pop.wav")
 var Build = preload("res://sfx/build.wav")
 var WARRIOR_COUNT = null
+var GATHERER_COUNT = null
 var SPEED = 1
+var DAY = null
 
 var AudioManager = preload("res://scenes/AudioManager.tscn")
 var AudioInstance = null
@@ -27,6 +29,8 @@ func initialize():
 	COINS = 5
 	TTL_CITY_SPAWN = 120
 	WARRIOR_COUNT = 1
+	GATHERER_COUNT = 1
+	DAY = 1
 
 func pop_sound():
 	AudioInstance.stream = Pop
@@ -53,5 +57,7 @@ func purchase(cost):
 func get_cost(type):
 	if type == "warrior":
 		return 5 * WARRIOR_COUNT
+	if type == "gatherer":
+		return 5 * GATHERER_COUNT
 	if type == "path":
 		return 0

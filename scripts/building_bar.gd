@@ -5,3 +5,4 @@ func _ready():
 
 func calc_progress(prog):
 	$bar.scale = Vector2(prog / Global.TTL_CITY_SPAWN, 1)
+	$Label.text = "DAY: " + str(Global.DAY)

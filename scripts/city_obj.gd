@@ -5,9 +5,9 @@ onready var player = preload("res://scenes/player_obj.tscn")
 func _ready():
 	$city_label.visible = false
 
-func create_warrior():
-	if Global.WRITE_MODE == "warrior":
-		var cost = Global.get_cost("warrior")
+func create_character():
+	if Global.WRITE_MODE == "warrior" or Global.WRITE_MODE == "gatherer":
+		var cost = Global.get_cost(Global.WRITE_MODE)
 		if  Global.COINS >= cost:
 			var parent = get_parent()
 			Global.purchase(cost)

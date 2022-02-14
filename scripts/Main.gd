@@ -2,12 +2,17 @@ extends Node2D
 onready var button = preload("res://scenes/tile_button.tscn")
 onready var icon1 = preload("res://sprites/path1.png")
 onready var icon2 = preload("res://sprites/warrior1.png")
+onready var icon3 = preload("res://sprites/warrior1.png")
+
 onready var city = preload("res://scenes/city_obj.tscn")
 var ttl_city_spawn = 0
 
 func _ready():
 	$tile_positioner.texture = null
-	var buttons = [{icon = icon1, mode = "path"}, {icon = icon2, mode = "warrior"}]
+	var buttons = [{icon = icon1, mode = "path"}, 
+					{icon = icon2, mode = "warrior"},
+					{icon = icon3, mode = "gatherer"}
+					]
 	
 	for i in len(buttons):
 		var b = button.instance()
@@ -21,6 +26,7 @@ func _process(delta):
 	ttl_city_spawn += Global.SPEED * delta
 	$building_bar.calc_progress(ttl_city_spawn)
 	if ttl_city_spawn >= Global.TTL_CITY_SPAWN:
+		Global.DAY += 1
 		ttl_city_spawn = 0
 		spawn_city()
 
