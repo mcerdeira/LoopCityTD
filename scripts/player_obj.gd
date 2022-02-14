@@ -61,11 +61,23 @@ func _physics_process(delta):
 			else:
 				current_path.remove(0)
 		else:
-			reverse = !reverse
-			$coin.visible = reverse
-			get_path()
-			if !reverse:
-				Global.warrior_leave_coin(reward)
-			else:
-				Global.warrior_get_coin()
-			
+			finish_path()
+
+func finish_path():
+	if type == "warrior":
+		#TODO: Fight the city, consume total_actions from destination
+		pass
+	elif type == "gatherer":
+		#TODO: if no more coins, what?
+		reverse = !reverse
+		$coin.visible = reverse
+		get_path()
+		if !reverse:
+			Global.warrior_leave_coin(reward)
+		else:
+			Global.warrior_get_coin()
+	elif type == "miner":
+		#TODO mine the rock, consume total_actions from destionation
+		pass
+	
+
