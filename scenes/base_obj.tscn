@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://sprites/base2.png" type="Texture" id=1]
 [ext_resource path="res://sprites/base1.png" type="Texture" id=2]
+[ext_resource path="res://scripts/base_obj.gd" type="Script" id=3]
+[ext_resource path="res://fonts/prstartk.ttf" type="DynamicFontData" id=4]
 
 [sub_resource type="SpriteFrames" id=3]
 animations = [ {
@@ -17,10 +19,16 @@ extents = Vector2( 7.75, 8 )
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 8, 8 )
 
+[sub_resource type="DynamicFont" id=5]
+size = 8
+font_data = ExtResource( 4 )
+
 [node name="base_obj" type="StaticBody2D"]
+script = ExtResource( 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 3 )
+frame = 1
 playing = true
 
 [node name="collider" type="CollisionShape2D" parent="."]
@@ -30,3 +38,16 @@ shape = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 4 )
+
+[node name="base_label" type="Label" parent="."]
+margin_left = -8.0
+margin_top = -17.0
+margin_right = 60.0
+margin_bottom = -8.0
+custom_fonts/font = SubResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_Area2D_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_Area2D_mouse_exited"]

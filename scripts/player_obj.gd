@@ -16,6 +16,7 @@ var reward = 0
 var doing_work = false
 var total_work_cooldown = 1.5
 var work_cooldown = total_work_cooldown
+var current_speed = 100
 
 func set_end_node(dest_node, position, pos):
 	end_node = position
@@ -43,15 +44,18 @@ func _ready():
 func initialize():
 	$sprites.animation = type
 	if type == "warrior":
+		current_speed = 110
 		Global.WARRIOR_COUNT += 1
 	elif type == "gatherer":
+		current_speed = 80
 		Global.GATHERER_COUNT += 1
 	elif type == "miner":
+		current_speed = 100
 		Global.MINER_COUNT += 1
 
 func _process(delta):
 	if doing_work:
-		work_cooldown -= 0.2 * delta
+		work_cooldown -= Global.WORK_SPEED * delta
 		if work_cooldown <= 0:
 			work_cooldown = total_work_cooldown
 			destination_node.consume_action(1)
@@ -72,7 +76,7 @@ func _physics_process(delta):
 		if current_path.size() > 0:
 			var d = position.distance_to(current_path[0])
 			if d > 2:
-				position = position.linear_interpolate(current_path[0], 100 * delta / d)
+				position = position.linear_interpolate(current_path[0], current_speed * delta / d)
 			else:
 				current_path.remove(0)
 		else:
@@ -87,6 +91,7 @@ func finish_path():
 		else:
 			var rem = destination_node.get_remaining_actions()
 			if rem <= 0:
+				destination_node.transform()
 				queue_free()
 		
 		reverse = !reverse

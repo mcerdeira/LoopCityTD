@@ -1,22 +1,31 @@
 extends TileMap
 onready var city = preload("res://scenes/city_obj.tscn")
+var total_build_sound_cooldown = 0.8
+var build_sound_cooldown = total_build_sound_cooldown
 
 func _ready():
 	pass
 
 func _process(delta):
+	if build_sound_cooldown > 0:
+		build_sound_cooldown -= 1 * delta
+	
 	if Global.WRITE_MODE == "path":
 		var mouse_pos = get_global_mouse_position()	
 		
 		if mouse_ok(mouse_pos) and Input.is_action_pressed("mouse_left"):
-			Global.build_sound()
+			if build_sound_cooldown <= 0:
+				build_sound_cooldown = total_build_sound_cooldown
+				Global.build_sound()
 			var real_pos = world_to_map(mouse_pos)
 			var tile_id = tile_set.find_tile_by_name("path_tilemap")
 			set_cell(real_pos.x, real_pos.y, tile_id)
 			update_bitmask_region()
 			
 		if Input.is_action_pressed("mouse_right"):
-			Global.build_sound()
+			if build_sound_cooldown <= 0:
+				build_sound_cooldown = total_build_sound_cooldown
+				Global.build_sound()
 			var real_pos = world_to_map(mouse_pos)
 			set_cellv(real_pos, -1)
 			update_bitmask_region()

@@ -12,51 +12,70 @@ var Build = preload("res://sfx/build.wav")
 var WARRIOR_COUNT = null
 var GATHERER_COUNT = null
 var MINER_COUNT = null
+var ARCHER_COUNT = null
 var SPEED = null
+var WORK_SPEED = null
 var DAY = null
 var destionation_types = []
 
 var AudioManager = preload("res://scenes/AudioManager.tscn")
 var AudioInstance = null
+var audio_players = 3
+var bus = "master"
+var available = [] 
+var queue = []
 
 func _ready():
-	AudioInstance = AudioManager.instance()
-	add_child(AudioInstance)
+	for i in audio_players:
+		var player = AudioManager.instance()
+		add_child(player)
+		available.append(player)
+		player.connect("finished", self, "_on_stream_finished", [player])
+		player.bus = bus
 	initialize()
 	
+func play(sound_path):
+	queue.append(sound_path)
+	
+func _on_stream_finished(stream):
+	available.append(stream)
+
+func _process(delta):
+	if not queue.empty() and not available.empty():
+		available[0].stream = queue.pop_front()
+		available[0].play()
+		available.pop_front()
+
 func initialize():
 	randomize()
-	SPEED = 1
+	SPEED = 3
+	WORK_SPEED = 0.3
 	WRITE_MODE = null
-	COINS = 5
+	COINS = 10
 	TTL_CITY_SPAWN = 120
 	MINER_COUNT = 0
 	WARRIOR_COUNT = 0
 	GATHERER_COUNT = 0
+	ARCHER_COUNT = 0
 	DAY = 1
 	destionation_types = ["chest", "city", "rock"]
 
 func pop_sound():
-	AudioInstance.stream = Pop
-	AudioInstance.play()
+	play(Pop)	
 
 func build_sound():
-	AudioInstance.stream = Build
-	AudioInstance.play()
+	play(Build)
 
 func warrior_leave_coin(coins):
 	Global.COINS += coins
-	AudioInstance.stream = Leave_Coin
-	AudioInstance.play()
+	play(Leave_Coin)
 	
 func warrior_get_coin():
-	AudioInstance.stream = Get_Coin
-	AudioInstance.play()
+	play(Get_Coin)
 	
 func purchase(cost):
 	Global.COINS -= cost
-	AudioInstance.stream = Purchase_Coin
-	AudioInstance.play()
+	play(Purchase_Coin)
 	
 func matching_types(mode, type):
 	return ((mode == "warrior" and type == "city") 
@@ -68,10 +87,12 @@ func is_character(mode):
 
 func get_cost(type):
 	if type == "warrior":
-		return 5 + (WARRIOR_COUNT * 2)
+		return 5 + WARRIOR_COUNT
 	if type == "gatherer":
-		return 5 + (GATHERER_COUNT * 2)
+		return 5 + GATHERER_COUNT
 	if type == "miner":
-		return 5 + (MINER_COUNT * 2)
+		return 5 + MINER_COUNT
+	if type == "archer":
+		return 10 + ARCHER_COUNT
 	if type == "path":
 		return 0
