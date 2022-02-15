@@ -51,7 +51,7 @@ func initialize():
 
 func _process(delta):
 	if doing_work:
-		work_cooldown -= 1 * delta
+		work_cooldown -= 0.2 * delta
 		if work_cooldown <= 0:
 			work_cooldown = total_work_cooldown
 			destination_node.consume_action(1)

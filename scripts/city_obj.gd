@@ -2,12 +2,21 @@ extends StaticBody2D
 export var coin_reward = 1
 export var type = "chest"
 var remaining_actions = 0
+var visible_ttl = 0
 export var total_actions = 0
 onready var player = preload("res://scenes/player_obj.tscn")
 
 func _ready():
 	$city_label.visible = false
 	initialize()
+	
+func _process(delta):
+	if $city_label.visible and visible_ttl > 0:
+		visible_ttl -= 1 * delta
+		if visible_ttl <= 0:
+			visible_ttl = 0
+			$city_label.visible = false
+			
 
 func randomize_me():
 	type = Global.destionation_types[randi() % Global.destionation_types.size()]
@@ -52,6 +61,9 @@ func create_character():
 func consume_action(amount):
 	remaining_actions -= amount
 	$city_label.text = "$" + str(remaining_actions) + "/" + str(total_actions)
+	if !$city_label.visible:
+		visible_ttl = 1
+		$city_label.visible = true
 
 func transform():
 	if type == "city":

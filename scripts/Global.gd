@@ -25,13 +25,14 @@ func _ready():
 	initialize()
 	
 func initialize():
+	randomize()
 	SPEED = 1
 	WRITE_MODE = null
 	COINS = 5
 	TTL_CITY_SPAWN = 120
-	MINER_COUNT = 1
-	WARRIOR_COUNT = 1
-	GATHERER_COUNT = 1
+	MINER_COUNT = 0
+	WARRIOR_COUNT = 0
+	GATHERER_COUNT = 0
 	DAY = 1
 	destionation_types = ["chest", "city", "rock"]
 
@@ -67,10 +68,10 @@ func is_character(mode):
 
 func get_cost(type):
 	if type == "warrior":
-		return 5 * WARRIOR_COUNT
+		return 5 + (WARRIOR_COUNT * 2)
 	if type == "gatherer":
-		return 5 * GATHERER_COUNT
+		return 5 + (GATHERER_COUNT * 2)
 	if type == "miner":
-		return 5 * MINER_COUNT
+		return 5 + (MINER_COUNT * 2)
 	if type == "path":
 		return 0
