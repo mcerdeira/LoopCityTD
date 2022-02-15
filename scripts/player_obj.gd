@@ -11,11 +11,16 @@ var line_tscn = preload("res://scenes/line.tscn")
 var line = null
 var reverse = false
 var base_pos = null
+var destination_node = null
 var reward = 0
+var doing_work = false
+var total_work_cooldown = 1.5
+var work_cooldown = total_work_cooldown
 
-func set_end_node(position, pos):
+func set_end_node(dest_node, position, pos):
 	end_node = position
 	base_pos = pos
+	destination_node = dest_node
 
 func get_path():
 	var parent = get_parent()
@@ -30,8 +35,8 @@ func get_path():
 func _ready():
 	$coin.visible = false
 	var parent = get_parent()
-	line = line_tscn.instance()
-	parent.add_child(line)
+#	line = line_tscn.instance()
+#	parent.add_child(line)
 	
 	get_path()
 	
@@ -45,9 +50,19 @@ func initialize():
 		Global.MINER_COUNT += 1
 
 func _process(delta):
+	if doing_work:
+		work_cooldown -= 1 * delta
+		if work_cooldown <= 0:
+			work_cooldown = total_work_cooldown
+			destination_node.consume_action(1)
+			var rem = destination_node.get_remaining_actions()
+			if rem <= 0:
+				destination_node.transform()
+				queue_free()
+	
 	if !active:
 		get_path()
-	line.points = current_path
+	#line.points = current_path
 	##print(current_path)
 	if !active and Input.is_action_just_pressed("vk_enter"):
 		active = true
@@ -65,10 +80,15 @@ func _physics_process(delta):
 
 func finish_path():
 	if type == "warrior":
-		#TODO: Fight the city, consume total_actions from destination
-		pass
+		doing_work = true
 	elif type == "gatherer":
-		#TODO: if no more coins, what?
+		if !reverse:
+			destination_node.consume_action(1)
+		else:
+			var rem = destination_node.get_remaining_actions()
+			if rem <= 0:
+				queue_free()
+		
 		reverse = !reverse
 		$coin.visible = reverse
 		get_path()
@@ -77,7 +97,5 @@ func finish_path():
 		else:
 			Global.warrior_get_coin()
 	elif type == "miner":
-		#TODO mine the rock, consume total_actions from destionation
-		pass
-	
+		doing_work = true
 

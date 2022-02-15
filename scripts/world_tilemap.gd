@@ -40,7 +40,6 @@ func spawn_destination():
 	Global.pop_sound()
 	var h = city.instance()
 	h.set_position(pos)
-	h.coin_reward = 1 + (randi() % 3)
 	h.randomize_me()
 	get_parent().get_parent().add_child(h)
 

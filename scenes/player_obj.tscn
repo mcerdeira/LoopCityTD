@@ -17,14 +17,14 @@ extents = Vector2( 2.25, 2.5 )
 
 [sub_resource type="SpriteFrames" id=3]
 animations = [ {
-"frames": [ ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ) ],
-"loop": true,
-"name": "miner",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ],
 "loop": true,
 "name": "gatherer",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ) ],
+"loop": true,
+"name": "miner",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 1 ), ExtResource( 2 ), ExtResource( 3 ) ],
