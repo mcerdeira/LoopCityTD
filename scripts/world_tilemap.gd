@@ -54,3 +54,6 @@ func spawn_destination():
 
 func is_empty(pos):
 	return get_world_2d().direct_space_state.intersect_point(pos, 1, [], 0x7FFFFFFF, true, true).empty()
+
+func get_real_pos(pos):
+	return world_to_map(map_to_world(pos))

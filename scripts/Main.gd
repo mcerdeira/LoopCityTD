@@ -1,10 +1,14 @@
 extends Node2D
 onready var button = preload("res://scenes/tile_button.tscn")
+#Button Icons
 onready var icon1 = preload("res://sprites/path1.png")
 onready var icon2 = preload("res://sprites/warrior1.png")
 onready var icon3 = preload("res://sprites/gatherer1.png")
 onready var icon4 = preload("res://sprites/miner1.png")
 onready var icon5 = preload("res://sprites/archer.png")
+#Units
+onready var archer_area = preload("res://scenes/archer_area.tscn")
+onready var archer_unit = preload("res://sprites/archer_unit.png")
 
 onready var city = preload("res://scenes/city_obj.tscn")
 var ttl_city_spawn = 0
@@ -27,6 +31,14 @@ func _ready():
 		add_child(b)
 
 func _process(delta):
+	if Global.WRITE_MODE == "archer":
+		$brush.visible = true
+		$brush.set_area(archer_unit, archer_area)
+	else:
+		if $brush.visible:
+			$brush.visible = false
+			$brush.destroy_area()
+	
 	ttl_city_spawn += Global.SPEED * delta
 	$building_bar.calc_progress(ttl_city_spawn)
 	if ttl_city_spawn >= Global.TTL_CITY_SPAWN:
@@ -48,4 +60,3 @@ func _input(event):
 func spawn_destination():
 	var node = get_node("nav/world_tilemap")
 	var c = node.spawn_destination()
-	

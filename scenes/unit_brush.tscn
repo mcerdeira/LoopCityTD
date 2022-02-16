@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/brush.gd" type="Script" id=1]
+
+[node name="brush_sprite" type="Sprite"]
+script = ExtResource( 1 )
