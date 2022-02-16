@@ -69,7 +69,6 @@ func _process(delta):
 		#line.points = current_path
 		#print(current_path)
 		var d = end_node.distance_to(current_path[current_path.size()-1])
-		print(d)
 		if d <= 8:
 			active = true
 	#if !active and Input.is_action_just_pressed("vk_enter"):
