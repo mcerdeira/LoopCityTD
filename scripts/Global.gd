@@ -73,6 +73,9 @@ func sword_sound():
 
 func pick_sound():
 	play(Pick)
+	
+func coin_sound():
+	play(Get_Coin)
 
 func warrior_leave_coin(coins):
 	Global.COINS += coins

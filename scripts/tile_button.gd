@@ -6,6 +6,15 @@ func _ready():
 	pass
 
 func _pressed():
+	if mode == "warrior":
+		Global.sword_sound()
+	elif mode == "path":
+		Global.build_sound()
+	elif mode == "miner":
+		Global.pick_sound()
+	elif mode == "gatherer":
+		Global.coin_sound()
+	
 	tile_positioner.texture = icon
 	Global.WRITE_MODE = mode
 

@@ -58,6 +58,11 @@ func _process(delta):
 		work_cooldown -= Global.WORK_SPEED * delta
 		if work_cooldown <= 0:
 			work_cooldown = total_work_cooldown
+			if type == "miner":
+				Global.pick_sound()
+			elif type == "warrior":
+				Global.sword_sound()
+				
 			destination_node.consume_action(1)
 			var rem = destination_node.get_remaining_actions()
 			if rem <= 0:
