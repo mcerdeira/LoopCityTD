@@ -14,6 +14,8 @@ func _pressed():
 		Global.pick_sound()
 	elif mode == "gatherer":
 		Global.coin_sound()
+	elif mode == "archer":
+		Global.arrow_sound()
 	
 	tile_positioner.texture = icon
 	Global.WRITE_MODE = mode

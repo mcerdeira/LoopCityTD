@@ -11,6 +11,8 @@ var Pop = preload("res://sfx/pop.wav")
 var Build = preload("res://sfx/build.wav")
 var Pick = preload("res://sfx/pick_sfx.wav")
 var Sword = preload("res://sfx/sword_clash.wav")
+var Arrow = preload("res://sfx/arrow_shoot.wav")
+
 var WARRIOR_COUNT = null
 var GATHERER_COUNT = null
 var MINER_COUNT = null
@@ -70,6 +72,9 @@ func build_sound():
 	
 func sword_sound():
 	play(Sword)
+	
+func arrow_sound():
+	play(Arrow)
 
 func pick_sound():
 	play(Pick)
