@@ -85,6 +85,7 @@ func _physics_process(delta):
 func finish_path():
 	if type == "warrior":
 		doing_work = true
+		$sprites.animation = "warrior_fighting"
 	elif type == "gatherer":
 		if !reverse:
 			destination_node.consume_action(1)
@@ -103,4 +104,5 @@ func finish_path():
 			Global.warrior_get_coin()
 	elif type == "miner":
 		doing_work = true
+		$sprites.animation = "miner_mining"
 
