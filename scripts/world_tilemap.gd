@@ -37,8 +37,8 @@ func spawn_destination():
 	var pos
 	while(true):
 		randomize()
-		var xx = randi() % 29
-		var yy = randi() % 14
+		var xx = 5 + (randi() % 29)
+		var yy = 2 + (randi() % 7)
 		pos = Vector2(xx, yy)
 		pos = map_to_world(pos)
 		pos.x += 8

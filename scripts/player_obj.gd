@@ -66,8 +66,16 @@ func _process(delta):
 	
 	if !active:
 		get_path()
+		#if not current_path.empty():
+		#	active = true
+		
 	#line.points = current_path
-	##print(current_path)
+	if not active and not current_path.empty():
+		var d = end_node.distance_to(current_path[current_path.size()-1])
+		print(d)
+		if d <= 8:
+			active = true
+	
 	if !active and Input.is_action_just_pressed("vk_enter"):
 		active = true
 	
@@ -84,8 +92,10 @@ func _physics_process(delta):
 
 func finish_path():
 	if type == "warrior":
-		doing_work = true
-		$sprites.animation = "warrior_fighting"
+		if not doing_work:
+			doing_work = true
+			$sprites.animation = "warrior_fighting"
+			Global.sword_sound()
 	elif type == "gatherer":
 		if !reverse:
 			destination_node.consume_action(1)
@@ -103,6 +113,8 @@ func finish_path():
 		else:
 			Global.warrior_get_coin()
 	elif type == "miner":
-		doing_work = true
-		$sprites.animation = "miner_mining"
+		if not doing_work:
+			doing_work = true
+			$sprites.animation = "miner_mining"
+			Global.pick_sound()
 

@@ -9,6 +9,8 @@ var Purchase_Coin = preload("res://sfx/2_Coins.wav")
 var Leave_Coin = preload("res://sfx/3_Coins.wav")
 var Pop = preload("res://sfx/pop.wav")
 var Build = preload("res://sfx/build.wav")
+var Pick = preload("res://sfx/pick_sfx.wav")
+var Sword = preload("res://sfx/sword_clash.wav")
 var WARRIOR_COUNT = null
 var GATHERER_COUNT = null
 var MINER_COUNT = null
@@ -49,7 +51,7 @@ func _process(delta):
 func initialize():
 	randomize()
 	SPEED = 3
-	WORK_SPEED = 0.3
+	WORK_SPEED = 0.5
 	WRITE_MODE = null
 	COINS = 10
 	TTL_CITY_SPAWN = 120
@@ -65,6 +67,12 @@ func pop_sound():
 
 func build_sound():
 	play(Build)
+	
+func sword_sound():
+	play(Sword)
+
+func pick_sound():
+	play(Pick)
 
 func warrior_leave_coin(coins):
 	Global.COINS += coins
@@ -80,6 +88,7 @@ func purchase(cost):
 func matching_types(mode, type):
 	return ((mode == "warrior" and type == "city") 
 	or (mode == "gatherer" and type == "chest")
+	or (mode == "gatherer" and type == "won city")
 	or (mode == "miner" and type == "rock"))
 
 func is_character(mode):

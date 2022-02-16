@@ -29,13 +29,21 @@ func randomize_me():
 	type = Global.destionation_types[randi() % Global.destionation_types.size()]
 	initialize()
 
-func initialize():
+func initialize(transformed := false):
 	if type == "chest":
-		total_actions = 10 + (randi() % 10)
+		var coins = 10
+		if transformed:
+			coins = 30
+			var dissapear = randi() % 3
+			if dissapear == 0:
+				queue_free()
+				return 0
+
+		total_actions = coins + (randi() % 10)
 		coin_reward = 1
 		$sprites.frame = sprite_indexes.chest
 	elif type == "city":
-		total_actions = 20 + (randi() % 50)
+		total_actions = 20 + (randi() % 51)
 		coin_reward = 3
 		$sprites.frame = sprite_indexes.city
 	elif type == "rock":
@@ -51,7 +59,7 @@ func initialize():
 		coin_reward = 1
 		$sprites.frame = sprite_indexes.wrecked_city
 	elif type == "haunted chest":
-		total_actions = 50 + (randi() % 100)
+		total_actions = 5 + (randi() % 20)
 		coin_reward = 1
 		$sprites.frame = sprite_indexes.haunted_chest
 		
@@ -89,7 +97,7 @@ func transform():
 		type = "chest"
 	elif "won city":
 		type = "wrecked city"
-	initialize()
+	initialize(true)
 
 func set_label():
 	var text = type + "\n"
