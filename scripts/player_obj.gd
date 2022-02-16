@@ -63,21 +63,17 @@ func _process(delta):
 			if rem <= 0:
 				destination_node.transform()
 				queue_free()
-	
-	if !active:
-		get_path()
-		#if not current_path.empty():
-		#	active = true
-		
-	#line.points = current_path
+				
 	if not active and not current_path.empty():
+		get_path()
+		#line.points = current_path
+		#print(current_path)
 		var d = end_node.distance_to(current_path[current_path.size()-1])
 		print(d)
 		if d <= 8:
 			active = true
-	
-	if !active and Input.is_action_just_pressed("vk_enter"):
-		active = true
+	#if !active and Input.is_action_just_pressed("vk_enter"):
+	#	active = true
 	
 func _physics_process(delta):
 	if active:
