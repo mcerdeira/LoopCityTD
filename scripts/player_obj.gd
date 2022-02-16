@@ -64,7 +64,7 @@ func _process(delta):
 				destination_node.transform()
 				queue_free()
 				
-	if not active and not current_path.empty():
+	if !active and !current_path.empty():
 		get_path()
 		#line.points = current_path
 		#print(current_path)
