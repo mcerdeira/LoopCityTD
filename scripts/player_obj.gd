@@ -17,6 +17,7 @@ var doing_work = false
 var total_work_cooldown = 1.5
 var work_cooldown = total_work_cooldown
 var current_speed = 100
+var dead = false
 
 func set_end_node(dest_node, position, pos):
 	end_node = position
@@ -54,6 +55,9 @@ func initialize():
 		Global.MINER_COUNT += 1
 
 func _process(delta):
+	if dead:
+		position.y -= 10 * delta
+	
 	if doing_work:
 		work_cooldown -= Global.WORK_SPEED * delta
 		if work_cooldown <= 0:
@@ -78,9 +82,22 @@ func _process(delta):
 			active = true
 	#if !active and Input.is_action_just_pressed("vk_enter"):
 	#	active = true
+
+func die():
+	if !dead:
+		$sprites.connect("animation_finished", self, "death_animation_finished")
+		$sprites.animation = "gatherer_death"
+		$coin.visible = false
+		dead = true
+	
+func death_animation_finished():
+	queue_free()
+	
+func path_truncated(pos1, pos2):
+	return (pos1.distance_to(pos2) >= 9)
 	
 func _physics_process(delta):
-	if active:
+	if active and !dead:
 		if current_path.size() > 0:
 			var d = position.distance_to(current_path[0])
 			if d > 2:
@@ -97,6 +114,16 @@ func finish_path():
 			$sprites.animation = "warrior_fighting"
 			Global.sword_sound()
 	elif type == "gatherer":
+		var trunc = null
+		if !reverse:
+			trunc = path_truncated(destination_node.position, position)
+		else:
+			trunc = path_truncated(base_pos, position)
+		
+		if trunc:
+			die()
+			return
+		
 		if !reverse:
 			destination_node.consume_action(1)
 		else:
