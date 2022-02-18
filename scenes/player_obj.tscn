@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://sprites/warrior1.png" type="Texture" id=1]
 [ext_resource path="res://sprites/warrior2.png" type="Texture" id=2]
@@ -24,6 +24,20 @@
 [ext_resource path="res://sprites/gatherer_death7.png" type="Texture" id=22]
 [ext_resource path="res://sprites/gatherer_death5.png" type="Texture" id=23]
 [ext_resource path="res://sprites/gatherer_death6.png" type="Texture" id=24]
+[ext_resource path="res://sprites/miner_death3.png" type="Texture" id=25]
+[ext_resource path="res://sprites/miner_death1.png" type="Texture" id=26]
+[ext_resource path="res://sprites/miner_death2.png" type="Texture" id=27]
+[ext_resource path="res://sprites/miner_death4.png" type="Texture" id=28]
+[ext_resource path="res://sprites/miner_death6.png" type="Texture" id=29]
+[ext_resource path="res://sprites/miner_death5.png" type="Texture" id=30]
+[ext_resource path="res://sprites/miner_death7.png" type="Texture" id=31]
+[ext_resource path="res://sprites/warrior_death5.png" type="Texture" id=32]
+[ext_resource path="res://sprites/warrior_death6.png" type="Texture" id=33]
+[ext_resource path="res://sprites/warrior_death7.png" type="Texture" id=34]
+[ext_resource path="res://sprites/warrior_death1.png" type="Texture" id=35]
+[ext_resource path="res://sprites/warrior_death3.png" type="Texture" id=36]
+[ext_resource path="res://sprites/warrior_death4.png" type="Texture" id=37]
+[ext_resource path="res://sprites/warrior_death2.png" type="Texture" id=38]
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 2.25, 2.5 )
@@ -55,6 +69,16 @@ animations = [ {
 "name": "miner",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 26 ), ExtResource( 27 ), ExtResource( 25 ), ExtResource( 28 ), ExtResource( 30 ), ExtResource( 29 ), ExtResource( 31 ) ],
+"loop": true,
+"name": "miner_death",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 35 ), ExtResource( 38 ), ExtResource( 36 ), ExtResource( 37 ), ExtResource( 32 ), ExtResource( 33 ), ExtResource( 34 ) ],
+"loop": true,
+"name": "warrior_death",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 22 ) ],
 "loop": true,
 "name": "gatherer_death",
@@ -69,8 +93,8 @@ shape = SubResource( 2 )
 
 [node name="sprites" type="AnimatedSprite" parent="."]
 frames = SubResource( 3 )
-animation = "gatherer_death"
-frame = 4
+animation = "gatherer"
+frame = 2
 playing = true
 
 [node name="coin" parent="." instance=ExtResource( 5 )]

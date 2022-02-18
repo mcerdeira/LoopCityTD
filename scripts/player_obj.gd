@@ -56,7 +56,8 @@ func initialize():
 
 func _process(delta):
 	if dead:
-		position.y -= 10 * delta
+		position.y -= 25 * delta
+		return 
 	
 	if doing_work:
 		work_cooldown -= Global.WORK_SPEED * delta
@@ -86,7 +87,13 @@ func _process(delta):
 func die():
 	if !dead:
 		$sprites.connect("animation_finished", self, "death_animation_finished")
-		$sprites.animation = "gatherer_death"
+		if type == "warrior":
+			$sprites.animation = "warrior_death"
+		elif type == "gatherer":
+			$sprites.animation = "gatherer_death"
+		elif type == "miner":
+			$sprites.animation = "miner_death"
+			
 		$coin.visible = false
 		dead = true
 	
@@ -109,6 +116,12 @@ func _physics_process(delta):
 
 func finish_path():
 	if type == "warrior":
+		var trunc = null
+		trunc = path_truncated(destination_node.position, position)
+		if trunc:
+			die()
+			return
+			
 		if not doing_work:
 			doing_work = true
 			$sprites.animation = "warrior_fighting"
@@ -140,6 +153,12 @@ func finish_path():
 		else:
 			Global.warrior_get_coin()
 	elif type == "miner":
+		var trunc = null
+		trunc = path_truncated(destination_node.position, position)
+		if trunc:
+			die()
+			return
+		
 		if not doing_work:
 			doing_work = true
 			$sprites.animation = "miner_mining"
