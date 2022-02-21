@@ -1,10 +1,14 @@
 extends StaticBody2D
 export var coin_reward = 1
 export var type = "chest"
+var enemy_spawn = 0
+var spawner = false
 var remaining_actions = 0
 var visible_ttl = 0
 export var total_actions = 0
 onready var player = preload("res://scenes/player_obj.tscn")
+onready var enemy = preload("res://scenes/enemy_obj.tscn")
+
 const sprite_indexes = {
 	chest = 0,
 	rock = 1,
@@ -19,6 +23,12 @@ func _ready():
 	initialize()
 	
 func _process(delta):
+	if spawner:
+		enemy_spawn -= 1 * delta
+		if enemy_spawn <= 0:
+			enemy_spawn = 3
+			create_enemy()
+	
 	if $city_label.visible and visible_ttl > 0:
 		visible_ttl -= 1 * delta
 		if visible_ttl <= 0:
@@ -57,13 +67,30 @@ func initialize(transformed := false):
 	elif type == "wrecked city":
 		total_actions = 50 + (randi() % 100)
 		coin_reward = 1
+		enemy_spawn = 3
+		spawner = true
 		$sprites.frame = sprite_indexes.wrecked_city
 	elif type == "haunted chest":
 		total_actions = 5 + (randi() % 20)
 		coin_reward = 1
 		$sprites.frame = sprite_indexes.haunted_chest
+		enemy_spawn = 3
+		spawner = true
 		
 	remaining_actions = total_actions
+
+func create_enemy():
+	if type == "haunted chest":
+		var parent = get_parent()
+		var e = enemy.instance()
+		var pos = parent.get_node("base_obj")
+		e.set_end_node(self, pos.position, position)
+		e.set_position(position)
+		e.type = "ogre"
+		e.initialize()
+		parent.add_child(e)
+	elif type == "wrecked city":
+		pass
 
 func create_character():
 	if Global.is_character(Global.WRITE_MODE) and Global.matching_types(Global.WRITE_MODE, type):
