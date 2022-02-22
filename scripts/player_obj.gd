@@ -76,7 +76,7 @@ func _process(delta):
 	if !active and !current_path.empty():
 		get_path()
 		var map = get_parent().get_node("nav/world_tilemap")
-		map.path_confirmed(current_path)
+		map.path_confirmed()
 		
 		#line.points = current_path
 		#print(current_path)
