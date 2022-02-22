@@ -2,9 +2,12 @@ extends TileMap
 onready var city = preload("res://scenes/city_obj.tscn")
 var total_build_sound_cooldown = 0.8
 var build_sound_cooldown = total_build_sound_cooldown
+var draft_tileid = null
+var path_tileid = null
 
 func _ready():
-	pass
+	draft_tileid = tile_set.find_tile_by_name("draft_tilemap")
+	path_tileid = tile_set.find_tile_by_name("path_tilemap")
 
 func _process(delta):
 	if build_sound_cooldown > 0:
@@ -18,20 +21,28 @@ func _process(delta):
 				build_sound_cooldown = total_build_sound_cooldown
 				Global.build_sound()
 			var real_pos = world_to_map(mouse_pos)
-			var tile_id = tile_set.find_tile_by_name("path_tilemap")
-			set_cell(real_pos.x, real_pos.y, tile_id)
+			set_cell(real_pos.x, real_pos.y, draft_tileid)
 			update_bitmask_region()
 			
 		if Input.is_action_pressed("mouse_right"):
-			if build_sound_cooldown <= 0:
-				build_sound_cooldown = total_build_sound_cooldown
-				Global.build_sound()
 			var real_pos = world_to_map(mouse_pos)
-			set_cellv(real_pos, -1)
-			update_bitmask_region()
+
+			if get_cellv(real_pos) == draft_tileid:
+				if build_sound_cooldown <= 0:
+					build_sound_cooldown = total_build_sound_cooldown
+					Global.build_sound()
+				
+				set_cellv(real_pos, -1)
+				update_bitmask_region()
 
 func mouse_ok(mouse_pos):
 	return (mouse_pos.y <= Global.BUTTON_ZONE_Y)
+	
+func path_confirmed(full_path):
+	for path in full_path:
+		var real_pos = world_to_map(path)
+		set_cell(real_pos.x, real_pos.y, path_tileid)
+		update_bitmask_region()
 
 func spawn_destination():
 	var pos

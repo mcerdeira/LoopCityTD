@@ -39,7 +39,6 @@ func _ready():
 	var parent = get_parent()
 #	line = line_tscn.instance()
 #	parent.add_child(line)
-	
 	get_path()
 	
 func initialize():
@@ -76,6 +75,9 @@ func _process(delta):
 				
 	if !active and !current_path.empty():
 		get_path()
+		var map = get_parent().get_node("nav/world_tilemap")
+		map.path_confirmed(current_path)
+		
 		#line.points = current_path
 		#print(current_path)
 		var d = end_node.distance_to(current_path[current_path.size()-1])
