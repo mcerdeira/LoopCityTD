@@ -16,18 +16,18 @@ func _process(delta):
 	
 	if Global.WRITE_MODE == "path":
 		var mouse_pos = get_global_mouse_position()	
+		var real_pos = world_to_map(mouse_pos)
 		
-		if mouse_ok(mouse_pos) and Input.is_action_pressed("mouse_left"):
+		if get_cellv(real_pos) == -1 and mouse_ok(mouse_pos) and Input.is_action_pressed("mouse_left"):
 			if build_sound_cooldown <= 0:
 				build_sound_cooldown = total_build_sound_cooldown
 				Global.build_sound()
-			var real_pos = world_to_map(mouse_pos)
 			current_path.append(real_pos)
+			
 			set_cell(real_pos.x, real_pos.y, draft_tileid)
 			update_bitmask_region()
 			
 		if Input.is_action_pressed("mouse_right"):
-			var real_pos = world_to_map(mouse_pos)
 			if get_cellv(real_pos) == draft_tileid:
 				if build_sound_cooldown <= 0:
 					build_sound_cooldown = total_build_sound_cooldown
@@ -39,10 +39,16 @@ func _process(delta):
 func mouse_ok(mouse_pos):
 	return (mouse_pos.y <= Global.BUTTON_ZONE_Y)
 	
-func path_confirmed():
-	for path in current_path:
-		if get_cellv(path) == draft_tileid:
-			set_cell(path.x, path.y, path_tileid)
+func path_confirmed(player_path, base_pos, end_node):	
+	base_pos = world_to_map(base_pos)
+	end_node = world_to_map(end_node)
+	set_cell(base_pos.x, base_pos.y, path_tileid)
+	set_cell(end_node.x, end_node.y, path_tileid)
+	
+	for i in range(1, player_path.size() - 1):
+		var p = world_to_map(player_path[i])
+		if get_cellv(p) == draft_tileid:
+			set_cell(p.x, p.y, path_tileid)
 			update_bitmask_region()
 
 func spawn_destination():

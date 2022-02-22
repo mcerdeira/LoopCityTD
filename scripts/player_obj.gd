@@ -20,10 +20,10 @@ var current_speed = 100
 var dead = false
 
 func set_end_node(dest_node, position, pos):
-	end_node = position
-	base_pos = pos
-	destination_node = dest_node
-
+	destination_node = dest_node #City or structure from object
+	end_node = position #City or structure position
+	base_pos = pos #base position
+	
 func get_path():
 	var parent = get_parent()
 	var path_find = parent.get_node("nav")
@@ -76,7 +76,7 @@ func _process(delta):
 	if !active and !current_path.empty():
 		get_path()
 		var map = get_parent().get_node("nav/world_tilemap")
-		map.path_confirmed()
+		map.path_confirmed(current_path, base_pos, end_node)
 		
 		#line.points = current_path
 		#print(current_path)
