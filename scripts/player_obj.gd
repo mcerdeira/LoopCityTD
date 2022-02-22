@@ -74,17 +74,14 @@ func _process(delta):
 				queue_free()
 				
 	if !active and !current_path.empty():
-		get_path()
-		var map = get_parent().get_node("nav/world_tilemap")
-		map.path_confirmed(current_path, base_pos, end_node)
-		
+		get_path()		
 		#line.points = current_path
 		#print(current_path)
 		var d = end_node.distance_to(current_path[current_path.size()-1])
 		if d <= 8:
 			active = true
-	#if !active and Input.is_action_just_pressed("vk_enter"):
-	#	active = true
+			var map = get_parent().get_node("nav/world_tilemap")
+			map.path_confirmed(current_path, base_pos, end_node)
 
 func die():
 	if !dead:

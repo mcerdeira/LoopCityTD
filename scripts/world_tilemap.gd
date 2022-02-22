@@ -39,7 +39,7 @@ func _process(delta):
 func mouse_ok(mouse_pos):
 	return (mouse_pos.y <= Global.BUTTON_ZONE_Y)
 	
-func path_confirmed(player_path, base_pos, end_node):	
+func path_confirmed(player_path, base_pos, end_node):
 	base_pos = world_to_map(base_pos)
 	end_node = world_to_map(end_node)
 	set_cell(base_pos.x, base_pos.y, path_tileid)
@@ -47,9 +47,9 @@ func path_confirmed(player_path, base_pos, end_node):
 	
 	for i in range(1, player_path.size() - 1):
 		var p = world_to_map(player_path[i])
-		if get_cellv(p) == draft_tileid:
-			set_cell(p.x, p.y, path_tileid)
-			update_bitmask_region()
+		#if get_cellv(p) == draft_tileid:
+		set_cell(p.x, p.y, path_tileid)
+		update_bitmask_region()
 
 func spawn_destination():
 	var pos
