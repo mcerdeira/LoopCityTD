@@ -52,11 +52,11 @@ func die():
 
 func finish_path():
 	if type == "ogre":
-		var trunc = null
-		trunc = path_truncated(destination_node.position, position)
-		if trunc:
-			die()
-			return
+#		var trunc = null
+#		trunc = path_truncated(destination_node.position, position)
+#		if trunc:
+#			die()
+#			return
 			
 		if not doing_work:
 			doing_work = true

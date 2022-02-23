@@ -27,18 +27,18 @@ func set_end_node(dest_node, position, pos):
 func get_path():
 	var parent = get_parent()
 	var path_find = parent.get_node("nav")
+	var init_pos = position
+
 	if reverse:
-		var init_pos = position
 		current_path = path_find.get_simple_path(init_pos, base_pos, false)
 	else:
-		var init_pos = position
 		current_path = path_find.get_simple_path(init_pos, end_node, false)
-
+	
 func _ready():
 	$coin.visible = false
 	var parent = get_parent()
-#	line = line_tscn.instance()
-#	parent.add_child(line)
+	#line = line_tscn.instance()
+	#parent.add_child(line)
 	get_path()
 	
 func initialize():
@@ -100,7 +100,7 @@ func death_animation_finished():
 	queue_free()
 	
 func path_truncated(pos1, pos2):
-	return (pos1.distance_to(pos2) >= 9)
+	return (pos1.distance_to(pos2) >= 15)
 	
 func _physics_process(delta):
 	if active and !dead:
@@ -115,26 +115,26 @@ func _physics_process(delta):
 
 func finish_path():
 	if type == "warrior":
-		var trunc = null
-		trunc = path_truncated(destination_node.position, position)
-		if trunc:
-			die()
-			return
+#		var trunc = null
+#		trunc = path_truncated(destination_node.position, position)
+#		if trunc:
+#			die()
+#			return
 			
 		if not doing_work:
 			doing_work = true
 			$sprites.animation = "warrior_fighting"
 			Global.sword_sound()
 	elif type == "gatherer":
-		var trunc = null
-		if !reverse:
-			trunc = path_truncated(destination_node.position, position)
-		else:
-			trunc = path_truncated(base_pos, position)
-		
-		if trunc:
-			die()
-			return
+#		var trunc = null
+#		if !reverse:
+#			trunc = path_truncated(destination_node.position, position)
+#		else:
+#			trunc = path_truncated(base_pos, position)
+#
+#		if trunc:
+#			die()
+#			return
 		
 		if !reverse:
 			destination_node.consume_action(1)
@@ -152,11 +152,11 @@ func finish_path():
 		else:
 			Global.warrior_get_coin()
 	elif type == "miner":
-		var trunc = null
-		trunc = path_truncated(destination_node.position, position)
-		if trunc:
-			die()
-			return
+#		var trunc = null
+#		trunc = path_truncated(destination_node.position, position)
+#		if trunc:
+#			die()
+#			return
 		
 		if not doing_work:
 			doing_work = true

@@ -39,19 +39,11 @@
 [ext_resource path="res://sprites/warrior_death4.png" type="Texture" id=37]
 [ext_resource path="res://sprites/warrior_death2.png" type="Texture" id=38]
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 2.25, 2.5 )
-
 [sub_resource type="SpriteFrames" id=3]
 animations = [ {
 "frames": [ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ],
 "loop": true,
 "name": "gatherer",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 12 ), ExtResource( 14 ), ExtResource( 13 ) ],
-"loop": true,
-"name": "warrior_fighting",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ) ],
@@ -74,6 +66,11 @@ animations = [ {
 "name": "miner_death",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 12 ), ExtResource( 14 ), ExtResource( 13 ) ],
+"loop": true,
+"name": "warrior_fighting",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 35 ), ExtResource( 38 ), ExtResource( 36 ), ExtResource( 37 ), ExtResource( 32 ), ExtResource( 33 ), ExtResource( 34 ) ],
 "loop": true,
 "name": "warrior_death",
@@ -85,17 +82,19 @@ animations = [ {
 "speed": 5.0
 } ]
 
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 2.25, 2.5 )
+
 [node name="player_obj" type="KinematicBody2D"]
 script = ExtResource( 4 )
-
-[node name="collider" type="CollisionShape2D" parent="."]
-shape = SubResource( 2 )
 
 [node name="sprites" type="AnimatedSprite" parent="."]
 frames = SubResource( 3 )
 animation = "gatherer"
-frame = 2
 playing = true
 
 [node name="coin" parent="." instance=ExtResource( 5 )]
 position = Vector2( 0, -11 )
+
+[node name="collider" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
