@@ -91,6 +91,7 @@ script = ExtResource( 4 )
 [node name="sprites" type="AnimatedSprite" parent="."]
 frames = SubResource( 3 )
 animation = "gatherer"
+frame = 2
 playing = true
 
 [node name="coin" parent="." instance=ExtResource( 5 )]

@@ -51,11 +51,11 @@ func path_confirmed(player_path, base_pos, end_node):
 		set_cell(p.x, p.y, path_tileid)
 		update_bitmask_region()
 		
-	for i in range(0, current_path.size() - 1):
-		var p = current_path[i]
-		if get_cellv(p) == draft_tileid:
-			set_cell(p.x, p.y, path_tileid)
-			update_bitmask_region()
+#	for i in range(0, current_path.size() - 1):
+#		var p = current_path[i]
+#		if get_cellv(p) == draft_tileid:
+#			set_cell(p.x, p.y, path_tileid)
+#			update_bitmask_region()
 			
 	current_path = []
 
