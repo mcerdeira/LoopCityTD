@@ -36,7 +36,7 @@ func initialize():
 func _process(delta):
 	if !active:
 		get_path()
-		if current_path:
+		if !current_path.empty():
 			active = true
 	
 func _physics_process(delta):

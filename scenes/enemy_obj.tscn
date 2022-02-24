@@ -33,4 +33,5 @@ shape = SubResource( 2 )
 [node name="sprites" type="AnimatedSprite" parent="."]
 frames = SubResource( 3 )
 animation = "ogre_fighting"
+frame = 1
 playing = true

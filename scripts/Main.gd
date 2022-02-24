@@ -38,8 +38,12 @@ func _process(delta):
 		if $brush.visible:
 			$brush.visible = false
 			$brush.destroy_area()
+			
+	var mult = 1
+	if Input.is_action_pressed("time_skip"):
+		mult = 10
 	
-	ttl_city_spawn += Global.SPEED * delta
+	ttl_city_spawn += (Global.SPEED * mult) * delta
 	$building_bar.calc_progress(ttl_city_spawn)
 	if ttl_city_spawn >= Global.TTL_CITY_SPAWN:
 		Global.DAY += 1

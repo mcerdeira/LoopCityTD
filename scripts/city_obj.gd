@@ -37,6 +37,7 @@ func _process(delta):
 			
 func randomize_me():
 	type = Global.destionation_types[randi() % Global.destionation_types.size()]
+	print(type)
 	initialize()
 
 func initialize(transformed := false):
@@ -121,7 +122,12 @@ func transform():
 	elif type == "city":
 		type = "won city"
 	elif type == "rock":
-		type = "chest"
+		var bad_chest = randi() % 5
+		if bad_chest == 0:
+			type = "haunted chest"
+		else:
+			type = "chest"
+		
 	elif "won city":
 		type = "wrecked city"
 	initialize(true)
