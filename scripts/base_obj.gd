@@ -1,8 +1,9 @@
 extends StaticBody2D
+var life = 100
 
 func _ready():
 	$base_label.visible = false
-	$base_label.text = "campfire"
+	$base_label.text = "Campfire\nH: " + str(life)
 
 func _on_Area2D_mouse_entered():
 	$base_label.visible = true	

@@ -4,7 +4,6 @@ var total_build_sound_cooldown = 0.8
 var build_sound_cooldown = total_build_sound_cooldown
 var draft_tileid = null
 var path_tileid = null
-var current_path = []
 
 func _ready():
 	draft_tileid = tile_set.find_tile_by_name("draft_tilemap")
@@ -22,7 +21,6 @@ func _process(delta):
 			if build_sound_cooldown <= 0:
 				build_sound_cooldown = total_build_sound_cooldown
 				Global.build_sound()
-			current_path.append(real_pos)
 			
 			set_cell(real_pos.x, real_pos.y, draft_tileid)
 			update_bitmask_region()
@@ -44,20 +42,27 @@ func path_confirmed(player_path, base_pos, end_node):
 	end_node = world_to_map(end_node)
 	set_cell(base_pos.x, base_pos.y, path_tileid)
 	set_cell(end_node.x, end_node.y, path_tileid)
+	var prev_cell = null
 	
 	for i in range(1, player_path.size() - 1):
 		var p = world_to_map(player_path[i])
-		#if get_cellv(p) == draft_tileid:
+		if prev_cell:
+			if prev_cell.x != p.x and prev_cell.y != p.y:
+				if get_cellv(p + Vector2(1, 0)) == draft_tileid:
+					set_cellv(p + Vector2(1, 0), path_tileid)
+				if get_cellv(p + Vector2(0, 1)) == draft_tileid:
+					set_cellv(p + Vector2(0, 1), path_tileid)
+				if get_cellv(p + Vector2(-1, 0)) == draft_tileid:
+					set_cellv(p + Vector2(-1, 0), path_tileid)
+				if get_cellv(p + Vector2(0, -1)) == draft_tileid:
+					set_cellv(p + Vector2(0, -1), path_tileid)
+			
+			prev_cell = p
+		else:
+			prev_cell = p
+		
 		set_cell(p.x, p.y, path_tileid)
 		update_bitmask_region()
-		
-#	for i in range(0, current_path.size() - 1):
-#		var p = current_path[i]
-#		if get_cellv(p) == draft_tileid:
-#			set_cell(p.x, p.y, path_tileid)
-#			update_bitmask_region()
-			
-	current_path = []
 
 func spawn_destination():
 	var pos
