@@ -99,9 +99,6 @@ func die():
 func death_animation_finished():
 	queue_free()
 	
-func path_truncated(pos1, pos2):
-	return (pos1.distance_to(pos2) >= 15)
-	
 func _physics_process(delta):
 	if active and !dead:
 		if current_path.size() > 0:
@@ -115,27 +112,11 @@ func _physics_process(delta):
 
 func finish_path():
 	if type == "warrior":
-#		var trunc = null
-#		trunc = path_truncated(destination_node.position, position)
-#		if trunc:
-#			die()
-#			return
-			
 		if not doing_work:
 			doing_work = true
 			$sprites.animation = "warrior_fighting"
 			Global.sword_sound()
 	elif type == "gatherer":
-#		var trunc = null
-#		if !reverse:
-#			trunc = path_truncated(destination_node.position, position)
-#		else:
-#			trunc = path_truncated(base_pos, position)
-#
-#		if trunc:
-#			die()
-#			return
-		
 		if !reverse:
 			destination_node.consume_action(1)
 		else:
@@ -152,14 +133,7 @@ func finish_path():
 		else:
 			Global.warrior_get_coin()
 	elif type == "miner":
-#		var trunc = null
-#		trunc = path_truncated(destination_node.position, position)
-#		if trunc:
-#			die()
-#			return
-		
 		if not doing_work:
 			doing_work = true
 			$sprites.animation = "miner_mining"
 			Global.pick_sound()
-

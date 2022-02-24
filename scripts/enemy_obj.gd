@@ -36,6 +36,12 @@ func initialize():
 func path_truncated(pos1, pos2):
 	return (pos1.distance_to(pos2) >= 9)
 	
+func _process(delta):
+	if !active:
+		get_path()
+		if current_path:
+			active = true
+	
 func _physics_process(delta):
 	if active and !dead:
 		if current_path.size() > 0:
