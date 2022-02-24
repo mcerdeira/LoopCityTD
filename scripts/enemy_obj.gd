@@ -32,9 +32,6 @@ func initialize():
 	$sprites.animation = type
 	if type == "ogre":
 		current_speed = 50
-
-func path_truncated(pos1, pos2):
-	return (pos1.distance_to(pos2) >= 9)
 	
 func _process(delta):
 	if !active:
@@ -58,12 +55,6 @@ func die():
 
 func finish_path():
 	if type == "ogre":
-#		var trunc = null
-#		trunc = path_truncated(destination_node.position, position)
-#		if trunc:
-#			die()
-#			return
-			
 		if not doing_work:
 			doing_work = true
 			$sprites.animation = "ogre_fighting"
