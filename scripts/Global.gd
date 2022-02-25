@@ -12,6 +12,9 @@ var Build = preload("res://sfx/build.wav")
 var Pick = preload("res://sfx/pick_sfx.wav")
 var Sword = preload("res://sfx/sword_clash.wav")
 var Arrow = preload("res://sfx/arrow_shoot.wav")
+var ButonClick = preload("res://sfx/button_click.wav")
+var ButonHover = preload("res://sfx/button_hover.wav")
+var StartSound = preload("res://sfx/start_echo.wav")
 
 var WARRIOR_COUNT = null
 var GATHERER_COUNT = null
@@ -65,6 +68,15 @@ func initialize():
 	ARCHER_COUNT = 0
 	DAY = 1
 	destionation_types = ["chest", "city", "rock"]
+
+func button_click_sound():
+	play(ButonClick)	
+
+func button_hover_sound():
+	play(ButonHover)	
+	
+func start_sound():
+	play(StartSound)	
 
 func pop_sound():
 	play(Pop)	

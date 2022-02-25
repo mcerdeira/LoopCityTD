@@ -14,6 +14,7 @@ onready var city = preload("res://scenes/city_obj.tscn")
 var ttl_city_spawn = 0
 
 func _ready():
+	Global.start_sound()
 	$tile_positioner.texture = null
 	var buttons = [{icon = icon1, mode = "path"}, 
 					{icon = icon3, mode = "gatherer"},

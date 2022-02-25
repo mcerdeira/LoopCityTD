@@ -47,13 +47,12 @@ script = ExtResource( 12 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 240, 51 )
 frames = SubResource( 1 )
-frame = 3
+frame = 6
 playing = true
 
 [node name="AnimatedSprite2" type="AnimatedSprite" parent="."]
 position = Vector2( 240, 109 )
 frames = SubResource( 2 )
-frame = 1
 playing = true
 
 [node name="start" type="Button" parent="."]
@@ -85,3 +84,6 @@ script = ExtResource( 16 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[connection signal="mouse_entered" from="start" to="start" method="_on_start_mouse_entered"]
+[connection signal="mouse_entered" from="quit" to="quit" method="_on_quit_mouse_entered"]
