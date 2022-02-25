@@ -11,6 +11,7 @@ font_data = ExtResource( 3 )
 [node name="tile_button" type="Button"]
 margin_right = 28.0
 margin_bottom = 22.0
+focus_mode = 0
 shortcut_in_tooltip = false
 icon = ExtResource( 2 )
 script = ExtResource( 1 )

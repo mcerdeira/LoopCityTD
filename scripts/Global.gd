@@ -28,6 +28,7 @@ var audio_players = 3
 var bus = "master"
 var available = [] 
 var queue = []
+var GAMESPEED = 1
 
 func _ready():
 	for i in audio_players:
@@ -52,6 +53,7 @@ func _process(delta):
 
 func initialize():
 	randomize()
+	GAMESPEED = 1
 	SPEED = 3
 	WORK_SPEED = 0.5
 	WRITE_MODE = null
@@ -87,6 +89,12 @@ func warrior_leave_coin(coins):
 	play(Leave_Coin)
 	
 func warrior_get_coin():
+	play(Get_Coin)
+	
+func thief_leave_coin():
+	play(Leave_Coin)
+	
+func thief_get_coin():
 	play(Get_Coin)
 	
 func purchase(cost):

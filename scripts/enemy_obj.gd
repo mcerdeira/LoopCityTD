@@ -9,9 +9,10 @@ var current_path = []
 var active = false
 var dead = false
 var doing_work = false
+var base_obj_ref = null
 
 func _ready():
-	pass
+	$coin.visible = false
 	
 func get_path():
 	var parent = get_parent()
@@ -23,7 +24,8 @@ func get_path():
 		var init_pos = position
 		current_path = path_find.get_simple_path(init_pos, end_node, false)	
 
-func set_end_node(dest_node, position, pos):
+func set_end_node(dest_node, base_obj, position, pos):
+	base_obj_ref = base_obj
 	end_node = position
 	base_pos = pos
 	destination_node = dest_node
@@ -32,8 +34,17 @@ func initialize():
 	$sprites.animation = type
 	if type == "ogre":
 		current_speed = 50
+	elif type == "thief":
+		current_speed = 120
 	
 func _process(delta):
+	if dead:
+		position.y -= 25 * delta
+		return 
+	
+	if doing_work:
+		queue_free()
+	
 	if !active:
 		get_path()
 		if !current_path.empty():
@@ -44,7 +55,11 @@ func _physics_process(delta):
 		if current_path.size() > 0:
 			var d = position.distance_to(current_path[0])
 			if d > 2:
-				position = position.linear_interpolate(current_path[0], current_speed * delta / d)
+				var cur_spd = current_speed
+				if Global.GAMESPEED != 1:
+					cur_spd += 10 * Global.GAMESPEED
+				var speed = (cur_spd * delta / d)
+				position = position.linear_interpolate(current_path[0], speed)
 			else:
 				current_path.remove(0)
 		else:
@@ -58,26 +73,25 @@ func finish_path():
 		if not doing_work:
 			doing_work = true
 			$sprites.animation = "ogre_fighting"
+			base_obj_ref.damage(1)
 			Global.sword_sound()
-#	elif type == "gatherer":
-#		var trunc = null
-#		if !reverse:
-#			trunc = path_truncated(destination_node.position, position)
-#		else:
-#			trunc = path_truncated(base_pos, position)
-#
-#		if trunc:
-#			die()
-#			return
-#
-#		if !reverse:
-#			destination_node.consume_action(1)
-#		else:
-#			var rem = destination_node.get_remaining_actions()
-#			if rem <= 0:
-#				destination_node.transform()
-#				queue_free()
-#
-#		reverse = !reverse
-#		$coin.visible = reverse
-#		get_path()
+	elif type == "thief":
+		if !reverse:
+			base_obj_ref.consume_action(1)
+		else:
+			var rem = base_obj_ref.get_remaining_actions()
+			if rem <= 0:
+				queue_free()
+		
+		reverse = !reverse
+		$coin.visible = reverse
+		get_path()
+		if !reverse:
+			destination_node.replenish_action(1)
+			Global.thief_leave_coin()
+		else:
+			Global.thief_get_coin()
+
+		reverse = !reverse
+		$coin.visible = reverse
+		get_path()

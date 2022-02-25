@@ -2,6 +2,7 @@ extends StaticBody2D
 export var coin_reward = 1
 export var type = "chest"
 var enemy_spawn = 0
+var enemy_spawn_total = 0
 var spawner = false
 var remaining_actions = 0
 var visible_ttl = 0
@@ -26,7 +27,7 @@ func _process(delta):
 	if spawner:
 		enemy_spawn -= 1 * delta
 		if enemy_spawn <= 0:
-			enemy_spawn = 3
+			enemy_spawn = enemy_spawn_total
 			create_enemy()
 	
 	if $city_label.visible and visible_ttl > 0:
@@ -68,14 +69,16 @@ func initialize(transformed := false):
 	elif type == "wrecked city":
 		total_actions = 50 + (randi() % 100)
 		coin_reward = 1
-		enemy_spawn = 3
+		enemy_spawn_total = 3
+		enemy_spawn = enemy_spawn_total
 		spawner = true
 		$sprites.frame = sprite_indexes.wrecked_city
 	elif type == "haunted chest":
 		total_actions = 5 + (randi() % 20)
 		coin_reward = 1
 		$sprites.frame = sprite_indexes.haunted_chest
-		enemy_spawn = 3
+		enemy_spawn_total = 5
+		enemy_spawn = enemy_spawn_total
 		spawner = true
 		
 	remaining_actions = total_actions
@@ -85,13 +88,20 @@ func create_enemy():
 		var parent = get_parent()
 		var e = enemy.instance()
 		var pos = parent.get_node("base_obj")
-		e.set_end_node(self, pos.position, position)
+		e.set_end_node(self, pos, pos.position, position)
 		e.set_position(position)
 		e.type = "ogre"
 		e.initialize()
 		parent.add_child(e)
 	elif type == "wrecked city":
-		pass
+		var parent = get_parent()
+		var e = enemy.instance()
+		var pos = parent.get_node("base_obj")
+		e.set_end_node(self, pos, pos.position, position)
+		e.set_position(position)
+		e.type = "thief"
+		e.initialize()
+		parent.add_child(e)
 
 func create_character():
 	if Global.is_character(Global.WRITE_MODE) and Global.matching_types(Global.WRITE_MODE, type):
@@ -116,6 +126,13 @@ func consume_action(amount):
 		visible_ttl = 1
 		$city_label.visible = true
 
+func replenish_action(amount):
+	remaining_actions += amount
+	set_label()
+	if !$city_label.visible:
+		visible_ttl = 1
+		$city_label.visible = true
+
 func transform():
 	if type == "chest":
 		type = "haunted chest"
@@ -127,7 +144,6 @@ func transform():
 			type = "haunted chest"
 		else:
 			type = "chest"
-		
 	elif "won city":
 		type = "wrecked city"
 	initialize(true)

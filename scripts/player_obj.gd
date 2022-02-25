@@ -59,7 +59,7 @@ func _process(delta):
 		return 
 	
 	if doing_work:
-		work_cooldown -= Global.WORK_SPEED * delta
+		work_cooldown -= (Global.WORK_SPEED * Global.GAMESPEED) * delta
 		if work_cooldown <= 0:
 			work_cooldown = total_work_cooldown
 			if type == "miner":
@@ -104,7 +104,11 @@ func _physics_process(delta):
 		if current_path.size() > 0:
 			var d = position.distance_to(current_path[0])
 			if d > 2:
-				position = position.linear_interpolate(current_path[0], current_speed * delta / d)
+				var cur_spd = current_speed
+				if Global.GAMESPEED != 1:
+					cur_spd += 30 * Global.GAMESPEED
+				var speed = (cur_spd * delta / d)
+				position = position.linear_interpolate(current_path[0], speed)
 			else:
 				current_path.remove(0)
 		else:
