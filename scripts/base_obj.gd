@@ -14,6 +14,7 @@ func _on_Area2D_mouse_exited():
 	$base_label.text = "Campfire\nH: " + str(life)
 	
 func damage(amount):
+	#TODO: Show label for a while
 	life -= amount
 	if life <= 0:
 		life = 0
